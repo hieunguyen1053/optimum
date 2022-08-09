@@ -523,8 +523,10 @@ class ORTDecoder:
 
         onnx_inputs = {
             "input_ids": input_ids.cpu().detach().numpy(),
-            "encoder_attention_mask": encoder_attention_mask.cpu().detach().numpy(),
         }
+        
+        if "encoder_attention_mask" in self.input_names:
+            onnx_inputs["encoder_attention_mask"] = encoder_attention_mask.cpu().detach().numpy()
 
         # Add the encoder_hidden_states inputs when needed
         if "encoder_hidden_states" in self.input_names:
